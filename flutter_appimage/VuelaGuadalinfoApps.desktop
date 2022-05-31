@@ -1,0 +1,8 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Name=Vuela Guadalinfo Apps
+Exec=flutter_appimage %u
+Icon=flutter_appimage
+Categories=Utility;

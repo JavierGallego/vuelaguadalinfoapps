@@ -1,0 +1,93 @@
+# appimage-builder recipe see https://appimage-builder.readthedocs.io for details
+version: 1
+AppDir:
+  path: /home/javier/Documentos/GitHub/appimagepool/flutter_appimage/AppDir
+  app_info:
+    id: vuelaguadalinfoapps
+    name: Vuela Guadalinfo Apps
+    icon: flutter_appimage_icon
+    version: latest
+    exec: flutter_appimage
+    exec_args: $@
+  apt:
+    arch: []
+    allow_unauthenticated: true
+    sources:
+    - sourceline: deb http://es.archive.ubuntu.com/ubuntu/ jammy main restricted
+    - sourceline: deb http://es.archive.ubuntu.com/ubuntu/ jammy-updates main restricted
+    - sourceline: deb http://es.archive.ubuntu.com/ubuntu/ jammy universe
+    - sourceline: deb http://es.archive.ubuntu.com/ubuntu/ jammy-updates universe
+    - sourceline: deb http://es.archive.ubuntu.com/ubuntu/ jammy multiverse
+    - sourceline: deb http://es.archive.ubuntu.com/ubuntu/ jammy-updates multiverse
+    - sourceline: deb http://es.archive.ubuntu.com/ubuntu/ jammy-backports main restricted
+        universe multiverse
+    - sourceline: deb http://security.ubuntu.com/ubuntu jammy-security main restricted
+    - sourceline: deb http://security.ubuntu.com/ubuntu jammy-security universe
+    - sourceline: deb http://security.ubuntu.com/ubuntu jammy-security multiverse
+    - sourceline: deb http://debian.opennms.org/ opennms-23 main
+    - sourceline: deb https://ppa.launchpadcontent.net/c.falco/mame/ubuntu/ jammy
+        main
+    - sourceline: deb [arch=amd64,arm64,armhf] http://packages.microsoft.com/repos/code
+        stable main
+    - sourceline: deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable
+        main
+    - sourceline: deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable
+        main
+    - sourceline: deb https://ppa.launchpadcontent.net/linuxuprising/java/ubuntu/
+        jammy main
+    - sourceline: deb http://deb.anydesk.com/ all main
+    - sourceline: deb https://ppa.launchpadcontent.net/appimagelauncher-team/stable/ubuntu/
+        jammy main
+    - sourceline: deb https://ppa.launchpadcontent.net/ondrej/php/ubuntu/ jammy main
+    - sourceline: deb [signed-by=/usr/share/keyrings/dart.gpg arch=amd64] https://storage.googleapis.com/download.dartlang.org/linux/debian
+        stable main
+    include: []
+  files:
+    include: []
+    exclude:
+    - usr/share/man
+    - usr/share/doc/*/README.*
+    - usr/share/doc/*/changelog.*
+    - usr/share/doc/*/NEWS.*
+    - usr/share/doc/*/TODO.*
+  test:
+    fedora-30:
+      image: appimagecrafters/tests-env:fedora-30
+      command: ./AppRun
+    debian-stable:
+      image: appimagecrafters/tests-env:debian-stable
+      command: ./AppRun
+    archlinux-latest:
+      image: appimagecrafters/tests-env:archlinux-latest
+      command: ./AppRun
+    centos-7:
+      image: appimagecrafters/tests-env:centos-7
+      command: ./AppRun
+    ubuntu-xenial:
+      image: appimagecrafters/tests-env:ubuntu-xenial
+      command: ./AppRun
+AppImage:
+  arch: x86_64
+  update-information: guess
+
+script:
+   - rm -rf AppDir | true
+   - mkdir AppDir
+   
+AppDir:
+    after_bundle:
+    - cp build/linux/x64/release/bundle/flutter_appimage AppDir
+    - cp -r build/linux/x64/release/bundle/lib/. AppDir/lib
+    - cp -r build/linux/x64/release/bundle/data AppDir
+    - cp flutter_appimage_icon.svg AppDir/usr/share/icons/
+pacman:
+      Architecture: x86_64
+      repositories:
+        core:
+          - https://mirror.rackspace.com/archlinux/$repo/os/$arch
+        extra:
+          - https://mirror.rackspace.com/archlinux/$repo/os/$arch
+      include:
+        - gtk3
+        - python # I don't know why we need but build fails without it  
+        - perl # I don't know why we need but build fails without it

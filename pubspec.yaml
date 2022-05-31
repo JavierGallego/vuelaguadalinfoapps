@@ -1,0 +1,58 @@
+name: appimagepool
+description: A simple, modern AppImageHub Client made for linux using flutter.
+
+version: 5.0.0
+publish_to: none
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  adwaita:
+  cached_network_image: ^3.1.0
+  carousel_slider: ^4.0.0
+  desktop_notifications: ^0.6.3
+  dio: ^4.0.0
+  flutter_localizations: 
+    sdk: flutter
+  file_picker: ^4.3.2
+  flutter_spinkit: ^5.1.0
+  flutter_svg: ^1.0.0
+  gap: ^2.0.0
+  hooks_riverpod: ^2.0.0-dev.0
+  intl: ^0.17.0
+  libadwaita: ^1.2.0-dev
+  libadwaita_bitsdojo: ^0.5.3
+  libadwaita_searchbar: ^0.5.0+1
+  lucide_icons: ^0.16.13
+  package_info_plus: ^1.0.6
+  path_provider: ^2.0.5
+  shared_preferences: ^2.0.8
+  simple_html_css: ^3.0.1
+  sticky_headers: ^0.2.0
+  url_launcher: ^6.0.12
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^1.0.0
+
+dependency_overrides:
+  bitsdojo_window_linux:
+    git:
+      url: https://github.com/prateekmedia/bitsdojo_window.git
+      path: bitsdojo_window_linux
+  bitsdojo_window_macos:
+    git:
+      url: https://github.com/prateekmedia/bitsdojo_window.git
+      path: bitsdojo_window_macos
+  bitsdojo_window_windows:
+    git:
+      url: https://github.com/prateekmedia/bitsdojo_window.git
+      path: bitsdojo_window_windows
+
+flutter:
+  uses-material-design: true
+  generate: true
